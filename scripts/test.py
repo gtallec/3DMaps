@@ -2,7 +2,6 @@ import bpy
 import bmesh
 
 # Empty the scene
-bpy.ops.object.mode_set(mode='OBJECT')
 bpy.ops.object.select_all(action='DESELECT')
 bpy.ops.object.select_all()
 bpy.ops.object.delete()
@@ -10,13 +9,13 @@ bpy.ops.object.delete()
 bpyscene = bpy.context.scene
 
 # Create an empty mesh and the object.
-mesh = bpy.data.meshes.new('Basic_Cube')
-basic_cube = bpy.data.objects.new("Basic_Cube", mesh)
+mesh = bpy.data.meshes.new('Earth')
+earth = bpy.data.objects.new("Earth", mesh)
 
 # Add the object into the scene.
-bpyscene.objects.link(basic_cube)
-bpyscene.objects.active = basic_cube
-basic_cube.select = True
+bpyscene.objects.link(earth)
+bpyscene.objects.active = earth
+earth.select = True
 
 # Construct the bmesh cube and assign it to the blender mesh.
 bm = bmesh.new()
