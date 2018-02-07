@@ -2,6 +2,7 @@ import bpy
 import bmesh
 
 # Empty the scene
+bpy.ops.object.mode_set(mode='OBJECT')
 bpy.ops.object.select_all(action='DESELECT')
 bpy.ops.object.select_all()
 bpy.ops.object.delete()
@@ -19,6 +20,10 @@ basic_cube.select = True
 
 # Construct the bmesh cube and assign it to the blender mesh.
 bm = bmesh.new()
-bmesh.ops.create_uvsphere(bm, u_segments=32, v_segments=16, diameter=1)
+bmesh.ops.create_icosphere(bm, subdivisions=4, diameter=1)
 bm.to_mesh(mesh)
 bm.free()
+
+for vert in mesh.vertices:
+    print( 'v %f %f %f\n' % (vert.co.x, vert.co.y, vert.co.z) )
+
