@@ -2,6 +2,7 @@
 from LandscapeMaker import LandscapeMaker
 ################################################################################
 import random as rd
+import matplotlib.pyplot as plt
 ################################################################################
 ################################################################################
 class Planete:
@@ -16,7 +17,7 @@ class Planete:
         maxAltitude = max([altitudes[1] for altitudes in dictOfLandscapes.values()])
         randomAltitude = rd.uniform(minAltitude,maxAltitude)
         self._landscapeList.append(landscapeMaker.associateLandscape(randomAltitude))
-        self._size = 1
+        self._size = 1000
 #############################Calculate last change position#####################
 ################################################################################
 
@@ -36,4 +37,17 @@ class Planete:
         i = 0
         while (i < self._size):
             ichange = self.lastChangePosition()
-            self._landscapeList[i].nextAltitude(ichange,i)
+            self._landscapeList[i].nextAltitude(i,ichange)
+            i+=1
+    def appendLandscape(self,landscape):
+        self._landscapeList.append(landscape)
+
+################################################################################
+##############################Display Curves####################################
+################################################################################
+
+    def display(self):
+        Lx = [i for i in range(len(self._landscapeList))]
+        Ly = [landscape._currentAlt for landscape in self._landscapeList]
+        plt.plot(Lx,Ly)
+        plt.show()

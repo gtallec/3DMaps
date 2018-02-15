@@ -13,9 +13,10 @@ class Landscape:
 ################################################################################
     def probabilityChange(self,i,iChange):
         #Calculate the probability of changing relief
-        selectionList = self._landscapeMaker.calculateTransitionProbability(self._name,i,iChange)
-        selectedRelief = np.random.choice(selectionList[0],1,True,selectionList[1])
-        return selectedRelief,selectionList[3]
+        selectionList = self._landscapeMaker.calculateTransitionProbability(self._name,self._currentAlt,i,iChange)
+        landScapeSelector = [i for i in range(len(selectionList[0]))]
+        selectedRelief = np.random.choice(landScapeSelector,1,True,selectionList[1])
+        return selectionList[0][selectedRelief[0]],selectionList[2][selectedRelief[0]]
 
     def calculateNewAltitude(self,selectedRelief,isClosest):
         #Calculate next altitude
@@ -25,21 +26,25 @@ class Landscape:
         currentAltitude = self._currentAlt
         step = 0
         if(self._name == selectedRelief):
-            currentAltitude += rd.uniform(-gradient,gradient)
+            newCurrentAltitude = currentAltitude + rd.uniform(-gradient,gradient)
+            while (highAltitude <= newCurrentAltitude) or (newCurrentAltitude <= lowAltitude):
+                newCurrentAltitude = currentAltitude + rd.uniform(-gradient,gradient)
+            currentAltitude = newCurrentAltitude
         else:
-            while(lowAltitude <= currentAltitude) and (currentAltitude <= highAltitude):
+            lowAltitudeSelected,highAltitudeSelected,gradientSelected = self._landscapeMaker.getIntel(selectedRelief)
+            while(highAltitudeSelected <= currentAltitude) or (currentAltitude <= lowAltitudeSelected):
                 currentAltitude += isClosest * gradient
         return currentAltitude
 
     def addNewAltitude(self,currentAltitude):
         #Send it to the landscapeMaker for him to associate new Landscape
-        self._landscapeMaker.associateLandscape(currentAltitude)
+        self._landscapeMaker.addLandscape(currentAltitude)
 
 ####################Full fonction to calculate new altitude#####################
 ################################################################################
     def nextAltitude(self,i,iChange):
         selectedRelief, isClosest = self.probabilityChange(i,iChange)
-        currentAltitude = self.calculateNewAltitude(selectedRelied, isClosest)
+        currentAltitude = self.calculateNewAltitude(selectedRelief, isClosest)
         self.addNewAltitude(currentAltitude)
 
 ###################################Gets ans Sets################################

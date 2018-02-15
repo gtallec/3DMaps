@@ -16,11 +16,15 @@ def Test():
     planete = Planete(dictOfLandscapes)
     print([planete._landscapeList[i]._currentAlt for i in range(len(planete._landscapeList))])
     print([planete._landscapeList[i]._name for i in range(len(planete._landscapeList))])
+
+    print('display Transition Probability')
+    landscapeMaker = LandscapeMaker(0,dictOfLandscapes)
+    print(landscapeMaker.calculateTransitionProbability('mountain',1550,1,1))
     pass
 
 
 #########################Pending Test###########################################
 ################################################################################
-Test()
 planete = Planete(dictOfLandscapes)
 planete.fillLandScapeList()
+planete.display()

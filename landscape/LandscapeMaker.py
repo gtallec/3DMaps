@@ -1,4 +1,7 @@
 from Landscape import Landscape
+from math import exp
+################################################################################
+################################################################################
 class LandscapeMaker:
 
     def __init__(self,planete,dictOfLandscapes):
@@ -15,5 +18,48 @@ class LandscapeMaker:
     def getIntel(self,name):
         return self._dictOfLandscapes[name]
 
-################################Probability computation#########################
+    def addLandscape(self,currentAlt):
+        self._planete.appendLandscape(self.associateLandscape(currentAlt))
+
+################################Probability computation bricks##################
 ################################################################################
+
+    def reliefLengthFactor(self,currentReliefName,toReliefName,i,iChange):
+        if(currentReliefName == toReliefName):
+            return 1
+        else:
+            return i-iChange
+
+    def closestReliefFactor(self,name,currentAltitude):
+        lowAltitude,highAltitude,gradient = self._dictOfLandscapes[name]
+        distanceList = [abs(lowAltitude - currentAltitude), abs(highAltitude - currentAltitude)]
+        isClosest = -1
+        if(distanceList[0] < distanceList[1]):
+            isClosest = 1
+        return exp(-min(distanceList)/5500),isClosest
+
+    def calculateFitness(self,currentReliefName, toReliefName, currentAltitude, i, iChange):
+        reliefLengthFactor = self.reliefLengthFactor(currentReliefName,toReliefName,i,iChange)
+        closestReliefFactor = self.closestReliefFactor(toReliefName,currentAltitude)
+        return reliefLengthFactor*closestReliefFactor[0],closestReliefFactor[1]
+
+##############################Probabitility Computation#########################
+################################################################################
+
+    def calculateTransitionProbability(self,currentReliefName,currentAltitude,i,iChange):
+        fitnessDict = dict()
+        for toReliefName in self._dictOfLandscapes.keys():
+            fitnessDict[toReliefName] = self.calculateFitness(currentReliefName,toReliefName,currentAltitude,i,iChange)
+        #Flatten the dict to simplify probabilistic selectionList
+        #List LSelection is a list of three list, the first is the (relief,id) second is probabilityList and third is the isClosest
+        sumFitness = sum([fitnessDict[name][0] for name in fitnessDict.keys()])
+        ReliefIndexList = []
+        probabilityList = []
+        isClosestList = []
+        j = 0
+        for toReliefName in fitnessDict.keys():
+            ReliefIndexList.append(toReliefName)
+            probabilityList.append(fitnessDict[toReliefName][0]/sumFitness)
+            isClosestList.append(fitnessDict[toReliefName][1])
+            j+=1
+        return [ReliefIndexList,probabilityList,isClosestList]
