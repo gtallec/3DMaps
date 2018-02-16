@@ -1,5 +1,7 @@
+from __future__ import division
 from Landscape import Landscape
 from math import exp
+
 ################################################################################
 ################################################################################
 class LandscapeMaker:
@@ -25,22 +27,25 @@ class LandscapeMaker:
 ################################################################################
 
     def reliefLengthFactor(self,currentReliefName,toReliefName,i,iChange):
+        gradientSum = sum([self._dictOfLandscapes[name][2] for name in self._dictOfLandscapes.keys()])
+        gradientNormalization = self._dictOfLandscapes[currentReliefName][2]/gradientSum
         if(currentReliefName == toReliefName):
             return 1
         else:
-            return i-iChange
+            return (i-iChange)*gradientNormalization
 
-    def closestReliefFactor(self,name,currentAltitude):
-        lowAltitude,highAltitude,gradient = self._dictOfLandscapes[name]
+    def closestReliefFactor(self,currentReliefName,toReliefName,currentAltitude):
+        lowAltitude,highAltitude = self._dictOfLandscapes[toReliefName][0] , self._dictOfLandscapes[toReliefName][1]
         distanceList = [abs(lowAltitude - currentAltitude), abs(highAltitude - currentAltitude)]
         isClosest = -1
         if(distanceList[0] < distanceList[1]):
             isClosest = 1
-        return exp(-min(distanceList)/5500),isClosest
+        currentReliefLowAltitude,currentReliefHighAltitude = self._dictOfLandscapes[currentReliefName][0] , self._dictOfLandscapes[currentReliefName][1]
+        return exp(-min(distanceList)/abs(currentReliefHighAltitude - currentReliefLowAltitude)),isClosest
 
     def calculateFitness(self,currentReliefName, toReliefName, currentAltitude, i, iChange):
         reliefLengthFactor = self.reliefLengthFactor(currentReliefName,toReliefName,i,iChange)
-        closestReliefFactor = self.closestReliefFactor(toReliefName,currentAltitude)
+        closestReliefFactor = self.closestReliefFactor(currentReliefName,toReliefName,currentAltitude)
         return reliefLengthFactor*closestReliefFactor[0],closestReliefFactor[1]
 
 ##############################Probabitility Computation#########################

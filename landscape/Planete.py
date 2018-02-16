@@ -7,17 +7,14 @@ import matplotlib.pyplot as plt
 ################################################################################
 class Planete:
 
-    def __init__(self,dictOfLandscapes):
+    def __init__(self,firstAltitude,dictOfLandscapes,size):
         #Instanciate a landscapeMaker which match altitudes with Landscapes
         landscapeMaker = LandscapeMaker(self,dictOfLandscapes)
         #Initialize the planet List
         self._landscapeList = []
         #Initialize with random altitudes
-        minAltitude = min([altitudes[0] for altitudes in dictOfLandscapes.values()])
-        maxAltitude = max([altitudes[1] for altitudes in dictOfLandscapes.values()])
-        randomAltitude = rd.uniform(minAltitude,maxAltitude)
-        self._landscapeList.append(landscapeMaker.associateLandscape(randomAltitude))
-        self._size = 1000
+        self._landscapeList.append(landscapeMaker.associateLandscape(firstAltitude))
+        self._size = size
 #############################Calculate last change position#####################
 ################################################################################
 
@@ -51,3 +48,10 @@ class Planete:
         Ly = [landscape._currentAlt for landscape in self._landscapeList]
         plt.plot(Lx,Ly)
         plt.show()
+##########################Get and sets##########################################
+################################################################################
+    def getLandscapeList(self,index):
+        return self._landscapeList[index]
+
+    def setLandscapeList(self,index,landscape):
+        self._landscapeList[index] = landscape
