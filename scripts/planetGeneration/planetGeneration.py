@@ -13,13 +13,18 @@ bpy.ops.object.select_all(action='DESELECT')
 bpy.ops.object.select_all()
 bpy.ops.object.delete()
 
-alts = np.zeros(482)
+alts = np.zeros(480)
+alts.shape = (15, 32)
+idx = 0
+ex = 0
+while idx < 32:
+    alts[1][idx] = ex
+    idx += 1
+    ex += 0.1
 
-index = 0
-for alt in alts:
-    if(index%2 == 0):
-        alts[index] = 1
-    index+=1
-
-newPlanet = Planet.Planet("test", 32, 16, alts,1)
-newPlanet.display()
+idx = 0
+while idx < 32:
+    alts[5][idx] = 1
+    idx += 1
+    
+newPlanet = Planet.Planet("test", 16, 32, alts,1)
