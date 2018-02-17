@@ -64,8 +64,6 @@ class Displayer:
         while ilat < latNb-1:
             ilon = 0
             while ilon < lonNb:
-                print(self.vertices[ilat][ilon].normal)
-                print(altitudes[ilat][ilon])
                 self.vertices[ilat][ilon].co += (self.vertices[ilat][ilon].normal)*altitudes[ilat][ilon]
                 ilon+=1
             ilat+=1

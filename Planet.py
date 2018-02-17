@@ -1,13 +1,15 @@
 # -*- coding: utf-8 -*-
 
+import AltitudesGenerator
+
 class Planet:
     
-    def __init__(self, id, latNb, lonNb, diameter, altitudes):
+    def __init__(self, id, latNb, lonNb, diameter):
         self.id = id
         self.latNb = latNb
         self.lonNb = lonNb
         self.diameter = diameter
-        self.altitudes = altitudes
+        self.altitudes = AltitudesGenerator.AltitudesGenerator().generateAltitudes(latNb, lonNb)
         print("Planet " + str(id) + " created")
         
     def getId(self):

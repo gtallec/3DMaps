@@ -7,8 +7,8 @@ class PlanetManager:
     def __init__(self):
         self.planets = []
     
-    def addPlanet(self, id, latNb, lonNb, diameter, altitudes):
-        planet = Planet.Planet(id, latNb, lonNb, diameter, altitudes)
+    def createPlanet(self, id, latNb, lonNb, diameter):
+        planet = Planet.Planet(id, latNb, lonNb, diameter)
         self.planets.append(planet)
         print("Planet " + str(planet.getId()) + " added")
         
