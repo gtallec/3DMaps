@@ -3,7 +3,13 @@
 import AltitudesGenerator
 
 class Planet:
+    """ Classe representant une planete avec ses attributs :
+    _ Identifiants
+    _ Nombre de latitudes
+    _ Nombre de longitudes
+    _ Diametre"""
     
+    # Recupere les attributs passes en parametre et genere des altitudes
     def __init__(self, id, latNb, lonNb, diameter):
         self.id = id
         self.latNb = latNb

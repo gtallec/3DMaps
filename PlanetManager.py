@@ -3,6 +3,7 @@
 import Planet
 
 class PlanetManager:
+    """ Sert a gerer un ensemble de planetes """
     
     def __init__(self):
         self.planets = []
