@@ -6,7 +6,7 @@ import PlanetManager
 import Displayer
 
 newManager = PlanetManager.PlanetManager()
-newManager.createPlanet(0, 128, 256, 1)
+newManager.createPlanet(0, 128, 256, 12.5)
 
 newDisplayer = Displayer.Displayer(newManager)
 newDisplayer.displayPlanetById(0)

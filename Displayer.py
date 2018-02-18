@@ -9,6 +9,7 @@ Created on Sat Feb 17 20:54:37 2018
 import bpy
 import bmesh
 import numpy as np
+import colorsys
 
 class Displayer:
     """ Sert a afficher dans la vue 3D Blender des planetes contenues
@@ -82,3 +83,21 @@ class Displayer:
                 mesh.vertices[self.vertices[ilat][ilon].index].co = self.vertices[ilat][ilon].co
                 ilon+=1
             ilat+=1
+            
+        # Affiche la topographie
+        self.displayTopography(mesh)
+
+    def createMaterials(self):
+        mats = np.zeros(140)
+        for idx in range(0,140):
+            mats[idx] = bpy.data.materials.new(name="Material"+str(idx))
+            mats[idx].diffuse_color = colorsys.hsv_to_rgb(idx*0.00643, 1, 1)
+                    
+    def displayTopography(self, mesh):
+        self.createMaterials()
+        for face in mesh.polygons:
+            coordinates = face.center
+            altitude = (((coordinates.x)**2 + (coordinates.y)**2 + (coordinates.z)**2)**0.5 - 12.5)*1000
+            
+            
+                

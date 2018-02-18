@@ -15,5 +15,5 @@ class AltitudesGenerator:
     def generateAltitudes(self, latNb, lonNb):
         altitudes = np.zeros(shape = (latNb-1,lonNb))
         whiteNoise = np.random.normal(size = (latNb-1,lonNb) )
-        altitudes = whiteNoise
+        altitudes = 0.007*whiteNoise
         return altitudes
