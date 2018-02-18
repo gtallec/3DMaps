@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 import numpy as np
 
 class AltitudesGenerator:
@@ -11,7 +10,6 @@ class AltitudesGenerator:
     
     """La fonction qui genere les altitudes
     Doit retourner une np.array de forme (latNb-1, lonNb)"""
-    
     def generateAltitudes(self, latNb, lonNb):
         altitudes = np.zeros((latNb-1)*lonNb)
         altitudes.shape = (latNb-1, lonNb)
