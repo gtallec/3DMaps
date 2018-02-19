@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
-
+from perlinGenerator import PerlinGenerator
 import numpy as np
+
 
 class AltitudesGenerator:
     """ Sert a generer une matrice aleatoire d'altitudes a partir d'un
@@ -12,8 +13,6 @@ class AltitudesGenerator:
     """La fonction qui genere les altitudes
     Doit retourner une np.array de forme (latNb-1, lonNb)"""
 
-    def generateAltitudes(self, latNb, lonNb):
-        altitudes = np.zeros(shape = (latNb-1,lonNb))
-        whiteNoise = np.random.normal(size = (latNb-1,lonNb) )
-        altitudes = 0.007*whiteNoise
+    def generateAltitudes(self,res, latNb, lonNb, amplitude):
+        altitudes = PerlinGenerator(latNb/res,lonNb/res,latNb,lonNb,amplitude)._perlinMatrix
         return altitudes
