@@ -4,10 +4,11 @@ import numpy as np
 from AltitudesGenerator import AltitudesGenerator
 
 #################################Variables######################################
-latitude = 128
+latitude = 129
 longitude = 256
 resolution = 8
 amplitude = 4000
 ################################################################################
 altitudeGenerator = AltitudesGenerator()
 matrix = altitudeGenerator.generateAltitudes(resolution,latitude,longitude,amplitude)
+print(matrix)
