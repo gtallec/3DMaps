@@ -1,13 +1,13 @@
 from Grid import Grid
 import numpy as np
-import scipy
-import matplotlib.pyplot as plt
 
 class PerlinGenerator:
 
     def __init__(self,verticalRes,horizontalRes,height,width,amplitude):
-        perlinHeight = height/verticalRes + 1
-        perlinWidth = width/horizontalRes + 1
+        perlinHeight = height//verticalRes + 1
+        print('perlinHeight',perlinHeight)
+        perlinWidth = width//horizontalRes + 1
+        print('perlinWidth',perlinWidth)
 
         self._perlinGrid = Grid(1,perlinHeight,perlinWidth)
         self._perlinMatrix = np.zeros((height,width))

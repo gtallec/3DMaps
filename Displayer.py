@@ -14,28 +14,28 @@ import colorsys
 class Displayer:
     """ Sert a afficher dans la vue 3D Blender des planetes contenues
     dans un planetManager"""
-    
+
     def __init__(self, planetManager):
         self.planetManager = planetManager
-    
 
-    # Affiche une planete dans la vue 3D Blender a partir de son id    
+
+    # Affiche une planete dans la vue 3D Blender a partir de son id
     def displayPlanetById(self, planetId):
-        
+
         # Recupere la planete et ses caracteristiques
         planet = self.planetManager.getPlanetById(planetId)
         latNb = planet.getLatNb()
         lonNb = planet.getLonNb()
         diameter = planet.getDiameter()
         altitudes = planet.getAltitudes()
-        
+
         # Vide la scene
         bpy.ops.object.select_all(action='DESELECT')
         bpy.ops.object.select_all()
         bpy.ops.object.delete()
-        
+
         bpyscene = bpy.context.scene
-        
+
         # Cree l'objet et un mesh vide
         mesh = bpy.data.meshes.new('Earth')
         earth = bpy.data.objects.new("Earth", mesh)
@@ -52,7 +52,7 @@ class Displayer:
         bm.free()
         self.mesh = mesh
         self.vertices = mesh.vertices
-        
+
         # Reassigne les indices des sommets
         self.vertices = sorted(self.vertices, key = lambda vert: vert.co.z)
         self.vertices = np.delete(self.vertices, 0)
@@ -65,7 +65,7 @@ class Displayer:
                 return -vert.co.x-2
         for latitude in self.vertices:
             latitude = sorted(latitude, key = triAngles)
-            
+
         # Recopie les altitudes dans self.vertices
         ilat = 0
         while ilat < latNb-1:
@@ -74,7 +74,7 @@ class Displayer:
                 self.vertices[ilat][ilon].co += (self.vertices[ilat][ilon].normal)*altitudes[ilat][ilon]
                 ilon+=1
             ilat+=1
-        
+
         # Assigne les altitudes aux sommet du mesh
         ilat = 0
         while ilat < latNb-1:
@@ -83,21 +83,12 @@ class Displayer:
                 mesh.vertices[self.vertices[ilat][ilon].index].co = self.vertices[ilat][ilon].co
                 ilon+=1
             ilat+=1
-            
+
         # Affiche la topographie
         self.displayTopography(mesh)
 
-    def createMaterials(self):
-        mats = np.zeros(140)
-        for idx in range(0,140):
-            mats[idx] = bpy.data.materials.new(name="Material"+str(idx))
-            mats[idx].diffuse_color = colorsys.hsv_to_rgb(idx*0.00643, 1, 1)
-                    
+
     def displayTopography(self, mesh):
-        self.createMaterials()
         for face in mesh.polygons:
             coordinates = face.center
             altitude = (((coordinates.x)**2 + (coordinates.y)**2 + (coordinates.z)**2)**0.5 - 12.5)*1000
-            
-            
-                

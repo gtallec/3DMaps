@@ -1,5 +1,4 @@
 from Node import Node
-import scipy.special
 import numpy as np
 import math
 
@@ -36,9 +35,9 @@ class Grid:
         return self.interpolateFunction(xNorm),self.interpolateFunction(yNorm)
 
     def interpolateFunction(self,x):
-        N = 10
-        L = [ scipy.special.binom(N + n, n)*scipy.special.binom(2*N + 1, N-n)*np.power(-x,n) for n in range(N+1) ]
-        return np.power(x,N+1)*sum(L)
+        #N = 10
+        #L = [ scipy.special.binom(N + n, n)*scipy.special.binom(2*N + 1, N-n)*np.power(-x,n) for n in range(N+1) ]
+        return x
 
 
 

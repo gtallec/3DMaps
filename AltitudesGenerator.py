@@ -14,5 +14,6 @@ class AltitudesGenerator:
     Doit retourner une np.array de forme (latNb-1, lonNb)"""
 
     def generateAltitudes(self,res, latNb, lonNb, amplitude):
-        altitudes = PerlinGenerator((latNb-1)/res,lonNb/res,latNb-1,lonNb,amplitude)._perlinMatrix
+        altitudes = PerlinGenerator(res,res,latNb,lonNb,amplitude)._perlinMatrix
+        altitudes = altitudes[:-1]
         return altitudes
