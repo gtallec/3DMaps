@@ -6,7 +6,16 @@ import PlanetManager
 import Displayer
 
 newManager = PlanetManager.PlanetManager()
-newManager.createPlanet(0, 128, 256, 12.5,0.8,8)
+newManager.createPlanet(id = 0,\
+                        latNb = 128,\
+                        lonNb = 256,\
+                        diameter = 12.5,\
+                        verticalResolution = 0.1,\
+                        horizontalResolution = 0.1,\
+                        amplitude = 1,\
+                        persistance = 1,\
+                        startOctave = 0,\
+                        endOctave = 5)
 
 newDisplayer = Displayer.Displayer(newManager)
 newDisplayer.displayPlanetById(0)

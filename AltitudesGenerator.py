@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from perlinGenerator import PerlinGenerator
+import perlinNoise
 import numpy as np
 
 
@@ -13,7 +13,6 @@ class AltitudesGenerator:
     """La fonction qui genere les altitudes
     Doit retourner une np.array de forme (latNb-1, lonNb)"""
 
-    def generateAltitudes(self,res, latNb, lonNb, amplitude):
-        altitudes = PerlinGenerator(res,res,latNb,lonNb,amplitude)._perlinMatrix
-        altitudes = altitudes[:-1]
-        return altitudes
+    def generateAltitudes(self, latNb, lonNb, verticalResolution = 1, horizontalResolution = 1, amplitude = 1, persistance = 1, startOctave = 0, endOctave = 5):
+        print(amplitude*perlinNoise.PerlinMatrixGenerator(latNb - 1, lonNb, verticalResolution, horizontalResolution).generate(persistance,startOctave,endOctave))
+        return amplitude*perlinNoise.PerlinMatrixGenerator(latNb - 1, lonNb, verticalResolution, horizontalResolution).generate(persistance,startOctave,endOctave)

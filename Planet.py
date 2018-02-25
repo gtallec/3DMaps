@@ -11,13 +11,12 @@ class Planet:
     _ Diametre"""
 
     # Recupere les attributs passes en parametre et genere des altitudes
-    def __init__(self, id, latNb, lonNb, diameter,amplitude,res):
+    def __init__(self, id, latNb, lonNb, diameter, verticalResolution = 1, horizontalResolution = 1, amplitude = 1, persistance = 1, startOctave = 0, endOctave = 5):
         self.id = id
         self.latNb = latNb
         self.lonNb = lonNb
         self.diameter = diameter
-        self.altitudes = AltitudesGenerator.AltitudesGenerator().generateAltitudes(res,latNb, lonNb,amplitude)
-        print(self.altitudes.shape)
+        self.altitudes = AltitudesGenerator.AltitudesGenerator().generateAltitudes(latNb, lonNb, verticalResolution, horizontalResolution, amplitude, persistance, startOctave, endOctave)
         print("Planet " + str(id) + " created")
 
     def getId(self):
