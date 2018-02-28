@@ -12,10 +12,7 @@ newManager.createPlanet(id = 0,\
                         diameter = 12.5,\
                         verticalResolution = 0.1,\
                         horizontalResolution = 0.1,\
-                        amplitude = 1,\
-                        persistance = 1,\
-                        startOctave = 0,\
-                        endOctave = 5)
+                        amplitude = 1)
 
 newDisplayer = Displayer.Displayer(newManager)
 newDisplayer.displayPlanetById(0)
